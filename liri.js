@@ -9,10 +9,7 @@ moment().format();
 var keys = require("./keys.js");
 console.log(keys);
 var Spotify = require("node-spotify-api");
-var spotify = new Spotify({
-  id: "5023d2790b7d478781ef16dde0a90a3a",
-  secret: "356f2557be5f4f5ea5bc182dc5dbeca3"
-});
+var spotify = new Spotify(keys.spotify);
 
 let method = process.argv[2];
 let second = process.argv.slice(3).join(" ");
@@ -40,13 +37,15 @@ if (method == "concert-this") {
       fs.appendFile(
         "log.txt",
         JSON.stringify(
+          "\n------------ " +
           artist +
             " will be performing in " +
             response.data[0].venue.name +
             "at " +
             response.data[0].venue.city +
             "on " +
-            currentTime
+            currentTime +
+            "\n------------ ",
         ),
         "utf8",
         function(err) {
@@ -82,16 +81,16 @@ if (method == "spotify-this-song") {
         console.log("----------------------------------");
         fs.appendFile(
           "log.txt",
-          JSON.stringify(
-            "Artist(s): " +
+          "\n------------" +
+            "\nArtist(s): " +
               songs[i].artists[0].name +
-              "Name of the song: " +
+              "\nName of the song: " +
               songs[i].name +
-              "Preview Link: " +
+              "\nPreview Link: " +
               songs[i].preview_url +
-              "This song came from the album: " +
-              songs[i].album.name
-          ),
+              "\nThis song came from the album: " +
+              songs[i].album.name +
+              "\n------------",
           "utf8",
           function(err) {
             if (err) throw err;
@@ -120,22 +119,22 @@ if (method == "movie-this") {
     console.log("----------------------------------");
     fs.appendFile(
       "log.txt",
-      JSON.stringify(
-        "Title: " +
+      "\n------------" +
+        "\nTitle: " +
           response.data.Title +
-          "It came out on: " +
+          "\nIt came out on: " +
           response.data.Year +
-          "IMDB Rating: " +
+          "\nIMDB Rating: " +
           response.data.imdbRating +
-          "Country: " +
+          "\nCountry: " +
           response.data.Country +
-          "Language: " +
+          "\nLanguage: " +
           response.data.Language +
-          "Plot: " +
+          "\nPlot: " +
           response.data.Plot +
-          "Actors and Actresses " +
-          response.data.Actors
-      ),
+          "\nActors and Actresses " +
+          response.data.Actors +
+        "\n------------",
       "utf8",
       function(err) {
         if (err) throw err;
@@ -172,15 +171,15 @@ if (method == "do-what-it-says") {
           console.log("----------------------------------");
           fs.appendFile(
             "log.txt",
-            JSON.stringify(
+            "\n------------" +
               artist +
-                " will be performing in " +
+                "will be performing in " +
                 response.data[0].venue.name +
                 "at " +
                 response.data[0].venue.city +
                 "on " +
-                currentTime
-            ),
+                currentTime +
+            "\n------------",
             "utf8",
             function(err) {
               if (err) throw err;
@@ -211,7 +210,7 @@ if (method == "do-what-it-says") {
             console.log("----------------------------------");
             fs.appendFile(
               "log.txt",
-              JSON.stringify(
+              "\n------------" +
                 "Artist(s): " +
                   songs[i].artists[0].name +
                   "Name of the song: " +
@@ -219,8 +218,8 @@ if (method == "do-what-it-says") {
                   "Preview Link: " +
                   songs[i].preview_url +
                   "This song came from the album: " +
-                  songs[i].album.name
-              ),
+                  songs[i].album.name +
+                  "\n------------",
               "utf8",
               function(err) {
                 if (err) throw err;
@@ -249,7 +248,7 @@ if (method == "do-what-it-says") {
         console.log("----------------------------------");
         fs.appendFile(
           "log.txt",
-          JSON.stringify(
+          "\n------------" +
             "Title: " +
               response.data.Title +
               "It came out on: " +
@@ -263,8 +262,8 @@ if (method == "do-what-it-says") {
               "Plot: " +
               response.data.Plot +
               "Actors and Actresses " +
-              response.data.Actors
-          ),
+              response.data.Actors +
+              "\n------------",
           "utf8",
           function(err) {
             if (err) throw err;
